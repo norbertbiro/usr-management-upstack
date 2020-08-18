@@ -8,11 +8,14 @@ const { Field, Control, Label, Input } = Form
 class ProductForm extends PureComponent {
   constructor(props) {
     super(props)
+    this.getPayload = this.getPayload.bind(this)
+    this.enableSave = this.enableSave.bind(this)
   }
   state = {
     name: '',
     cost: '',
   }
+
   onChange = (evt) => {
     const value = evt.target.value
     this.setState({
@@ -20,8 +23,21 @@ class ProductForm extends PureComponent {
     })
   }
 
+  getPayload = () => ({ ...this.state, id: this.props.productId })
+
+  enableSave = () => this.state.name.length > 0 && this.state.cost.length > 0
+
+  componentDidMount() {
+    if (Object.keys(this.props.existingProduct).length > 0) {
+      this.setState({
+        name: this.props.existingProduct.name,
+        cost: this.props.existingProduct.cost,
+      })
+    }
+  }
   render() {
     const { name, cost } = this.state
+    const { existingProduct } = this.props
     return (
       <div className={styles.product_form}>
         <Box>
@@ -53,7 +69,19 @@ class ProductForm extends PureComponent {
             <Control>
               <Button
                 renderAs={'button'}
-                onClick={() => this.props.addProduct('hello')}>
+                onClick={() => {
+                  Object.keys(existingProduct).length > 0
+                    ? this.props.editProduct({
+                        product: { ...this.state, id: existingProduct.id },
+                        id: this.props.userId,
+                      })
+                    : this.props.addProduct({
+                        product: this.getPayload(),
+                        id: this.props.userId,
+                      })
+                  this.props.close()
+                }}
+                disabled={!this.enableSave()}>
                 SAVE
               </Button>
             </Control>

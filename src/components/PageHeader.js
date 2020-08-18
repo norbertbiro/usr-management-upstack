@@ -5,7 +5,13 @@ import SearchBar from './SearchBar'
 
 import helperStyles from '../styles/helpers.module.scss'
 
-const PageHeader = ({ subtitle, children, searchbar, inverted }) => (
+const PageHeader = ({
+  subtitle,
+  children,
+  searchbar,
+  inverted,
+  filterMethod,
+}) => (
   <Box>
     <Level
       renderAs="nav"
@@ -25,7 +31,7 @@ const PageHeader = ({ subtitle, children, searchbar, inverted }) => (
       {searchbar && (
         <Level.Side align="right">
           <Level.Item>
-            <SearchBar />
+            <SearchBar filterMethod={filterMethod} />
           </Level.Item>
         </Level.Side>
       )}

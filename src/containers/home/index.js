@@ -16,18 +16,23 @@ import styles from '../../styles/home.module.scss'
 
 const Home = (props) => {
   const [userList, setUserList] = useState(props.users)
+  const [filter, setFilter] = useState('')
+
+  const filterUserList = (param) => {
+    setFilter(param)
+  }
   return (
     <section className={styles.home}>
       <Container>
         <Columns>
           <Columns.Column>
-            <PageHeader subtitle={'Home'} />
+            <PageHeader subtitle={'Home'} filterMethod={filterUserList} />
           </Columns.Column>
         </Columns>
 
         <Columns>
           <Columns.Column>
-            <UserList users={userList} />
+            <UserList users={userList} filter={filter} />
           </Columns.Column>
         </Columns>
       </Container>

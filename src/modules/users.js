@@ -188,33 +188,50 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
+  const getClonedState = () => Object.assign({}, state)
+
   switch (action.type) {
     case ADD_PRODUCT:
-      console.log(action)
+      getClonedState().users.map((user) => {
+        if (Number(user.id) === Number(action.payload.id)) {
+          user.products = user.products || []
+          user.products.push(action.payload.product)
+        }
+      })
+
       return {
-        ...state,
-        isIncrementing: true,
+        ...getClonedState(),
       }
     //
-    // case INCREMENT:
-    //   return {
-    //     ...state,
-    //     count: state.count + 1,
-    //     isIncrementing: !state.isIncrementing,
-    //   }
-    //
-    // case DECREMENT_REQUESTED:
-    //   return {
-    //     ...state,
-    //     isDecrementing: true,
-    //   }
-    //
-    // case DECREMENT:
-    //   return {
-    //     ...state,
-    //     count: state.count - 1,
-    //     isDecrementing: !state.isDecrementing,
-    //   }
+    case EDIT_PRODUCT:
+      getClonedState().users.map((user) => {
+        if (Number(user.id) === Number(action.payload.id)) {
+          user.products = user.products || []
+          user.products.map((product, index) => {
+            if (product.id === action.payload.product.id) {
+              user.products[index] = action.payload.product
+            }
+          })
+        }
+      })
+      return {
+        ...getClonedState(),
+      }
+
+    case DELETE_PRODUCT:
+      getClonedState().users.map((user) => {
+        if (Number(user.id) === Number(action.payload.id)) {
+          user.products = user.products || []
+          user.products.map((product, index) => {
+            if (product.id === action.payload.productId) {
+              user.products.splice(index, 1)
+            }
+          })
+        }
+      })
+      return {
+        ...getClonedState(),
+      }
 
     default:
       return state
@@ -229,43 +246,21 @@ export const addProduct = (payload) => {
     })
   }
 }
-//
-// export const incrementAsync = () => {
-//   return (dispatch) => {
-//     dispatch({
-//       type: INCREMENT_REQUESTED,
-//     })
-//
-//     return setTimeout(() => {
-//       dispatch({
-//         type: INCREMENT,
-//       })
-//     }, 3000)
-//   }
-// }
-//
-// export const decrement = () => {
-//   return (dispatch) => {
-//     dispatch({
-//       type: DECREMENT_REQUESTED,
-//     })
-//
-//     dispatch({
-//       type: DECREMENT,
-//     })
-//   }
-// }
-//
-// export const decrementAsync = () => {
-//   return (dispatch) => {
-//     dispatch({
-//       type: DECREMENT_REQUESTED,
-//     })
-//
-//     return setTimeout(() => {
-//       dispatch({
-//         type: DECREMENT,
-//       })
-//     }, 3000)
-//   }
-// }
+
+export const editProduct = (payload) => {
+  return (dispatch) => {
+    dispatch({
+      type: EDIT_PRODUCT,
+      payload,
+    })
+  }
+}
+
+export const deleteProduct = (payload) => {
+  return (dispatch) => {
+    dispatch({
+      type: DELETE_PRODUCT,
+      payload,
+    })
+  }
+}

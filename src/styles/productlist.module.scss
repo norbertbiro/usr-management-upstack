@@ -16,8 +16,21 @@
   }
 }
 
-.product_form {
+.product_form,
+.confirmation_popup {
   background: white;
   z-index: 2;
   border-radius: 4px;
+}
+
+.confirmation_popup {
+  &__btn_wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  &__button {
+    &:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
 }
