@@ -5,6 +5,14 @@ import PageHeader from '../../components/PageHeader'
 import Anchor from '../../components/Anchor'
 import ProductList from '../../components/ProductList'
 import { ArrowLeft } from '../../assets/icons'
+import { bindActionCreators } from 'redux'
+import {
+  decrement,
+  decrementAsync,
+  increment,
+  incrementAsync,
+} from '../../modules/counter'
+import { connect } from 'react-redux'
 
 const User = () => (
   <section className={styles.user}>
@@ -68,4 +76,17 @@ const User = () => (
   </section>
 )
 
-export default User
+const mapStateToProps = ({ counter }) => ({
+  count: counter.count,
+  isIncrementing: counter.isIncrementing,
+  isDecrementing: counter.isDecrementing,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  hideModal: () => dispatch(hideModal()),
+  showModal: (modalProps, modalType) => {
+    dispatch(showModal({ modalProps, modalType }))
+  },
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(User)
