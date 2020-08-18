@@ -3,7 +3,7 @@ import { Button, Box } from 'react-bulma-components'
 
 import styles from '../styles/productlist.module.scss'
 
-const ProductList = ({ products }) => (
+const ProductList = ({ products, openModal }) => (
   <div className={styles.products}>
     {products.map((product) => (
       <Box>
@@ -11,7 +11,10 @@ const ProductList = ({ products }) => (
           <span className={styles.products__name}>Product Name</span>
           <span className={styles.products__price}>123.43</span>
           <div className={`${styles.products__actions} is-flex`}>
-            <Button renderAs={'button'} className={styles.products__button}>
+            <Button
+              renderAs={'button'}
+              className={styles.products__button}
+              onClick={openModal}>
               Edit
             </Button>
             <Button renderAs={'button'} className={styles.products__button}>

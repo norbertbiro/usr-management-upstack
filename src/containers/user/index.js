@@ -1,92 +1,91 @@
-import React from 'react'
-import { Container, Button, Columns, Level, Hero } from 'react-bulma-components'
+import React, { useState } from 'react'
+import {
+  Container,
+  Button,
+  Columns,
+  Level,
+  Hero,
+  Modal,
+} from 'react-bulma-components'
 import styles from '../../styles/user.module.scss'
 import PageHeader from '../../components/PageHeader'
 import Anchor from '../../components/Anchor'
 import ProductList from '../../components/ProductList'
+import ProductForm from '../../components/ProductForm'
 import { ArrowLeft } from '../../assets/icons'
-import { bindActionCreators } from 'redux'
-import {
-  decrement,
-  decrementAsync,
-  increment,
-  incrementAsync,
-} from '../../modules/counter'
-import { connect } from 'react-redux'
 
-const User = () => (
-  <section className={styles.user}>
-    <Container>
-      <Columns>
-        <Columns.Column>
-          <PageHeader searchbar={false} subtitle="First Name Last Name">
-            <Level.Side align="left">
-              <Level.Item>
-                <Button
-                  renderAs={Anchor}
-                  href={'#'}
-                  onClick={() => alert('go-back')}
-                  color="light">
-                  <ArrowLeft /> Go Back
-                </Button>
-              </Level.Item>
-            </Level.Side>
-          </PageHeader>
-        </Columns.Column>
-      </Columns>
+const User = () => {
+  const [show, setShow] = useState(false)
+  const closeHandler = () => setShow(false)
 
-      <Columns>
-        <Columns.Column>
-          <Hero className="hero" color="light">
-            <Hero.Body className={styles.hero}>
-              <div
-                className={`${styles.hero__body_section} ${styles.hero__body_section__is_column}`}>
-                <span className="is-block is-size-5">email</span>
-                <span className="is-block is-size-5">cc_number</span>
-                <span className="is-block is-size-5">cc_type</span>
-              </div>
-              {/*Wasn't able to use the BEM standard completely since it has the conflict with the "-" but there's a
+  return (
+    <section className={styles.user}>
+      <Container>
+        <Columns>
+          <Columns.Column>
+            <PageHeader searchbar={false} subtitle="First Name Last Name">
+              <Level.Side align="left">
+                <Level.Item>
+                  <Button
+                    renderAs={Anchor}
+                    href={'#'}
+                    onClick={() => alert('go-back')}
+                    color="light">
+                    <ArrowLeft /> Go Back
+                  </Button>
+                </Level.Item>
+              </Level.Side>
+            </PageHeader>
+          </Columns.Column>
+        </Columns>
+
+        <Columns>
+          <Columns.Column>
+            <Hero className="hero" color="light">
+              <Hero.Body className={styles.hero}>
+                <div
+                  className={`${styles.hero__body_section} ${styles.hero__body_section__is_column}`}>
+                  <span className="is-block is-size-5">email</span>
+                  <span className="is-block is-size-5">cc_number</span>
+                  <span className="is-block is-size-5">cc_type</span>
+                </div>
+                {/*Wasn't able to use the BEM standard completely since it has the conflict with the "-" but there's a
               workaround with a webpack module, i wouldn't spend to much time on that now.*/}
-              <div
-                className={`${styles.hero__body_section} ${styles.hero__body_section__align_center} ${styles.hero__body_section__is_column}`}>
-                <span className="is-block is-size-2">123.43</span>
-                <span className="is-block is-size-5">currency</span>
-              </div>
-            </Hero.Body>
-          </Hero>
-        </Columns.Column>
-      </Columns>
+                <div
+                  className={`${styles.hero__body_section} ${styles.hero__body_section__align_center} ${styles.hero__body_section__is_column}`}>
+                  <span className="is-block is-size-2">123.43</span>
+                  <span className="is-block is-size-5">currency</span>
+                </div>
+              </Hero.Body>
+            </Hero>
+          </Columns.Column>
+        </Columns>
 
-      <Columns>
-        <Columns.Column>
-          <PageHeader searchbar={false} subtitle={'Products'} inverted={true}>
-            <Level.Side align="right">
-              <Level.Item>
-                <Button renderAs={'button'} color="info">
-                  ADD
-                </Button>
-              </Level.Item>
-            </Level.Side>
-          </PageHeader>
+        <Columns>
+          <Columns.Column>
+            <PageHeader searchbar={false} subtitle={'Products'} inverted={true}>
+              <Level.Side align="right">
+                <Level.Item>
+                  <Button renderAs={'button'} color="info">
+                    ADD
+                  </Button>
+                </Level.Item>
+              </Level.Side>
+            </PageHeader>
 
-          <ProductList products={[1, 2, 3, 4, 5, 6]} />
-        </Columns.Column>
-      </Columns>
-    </Container>
-  </section>
-)
+            <ProductList
+              products={[1, 2, 3, 4, 5, 6]}
+              openModal={() => setShow(true)}
+            />
+          </Columns.Column>
+        </Columns>
+      </Container>
 
-const mapStateToProps = ({ counter }) => ({
-  count: counter.count,
-  isIncrementing: counter.isIncrementing,
-  isDecrementing: counter.isDecrementing,
-})
+      <Modal show={show} onClose={closeHandler}>
+        <ProductForm />
+      </Modal>
+    </section>
+  )
+}
 
-const mapDispatchToProps = (dispatch) => ({
-  hideModal: () => dispatch(hideModal()),
-  showModal: (modalProps, modalType) => {
-    dispatch(showModal({ modalProps, modalType }))
-  },
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(User)
+export default User
