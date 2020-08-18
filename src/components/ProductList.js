@@ -5,8 +5,8 @@ import styles from '../styles/productlist.module.scss'
 
 const ProductList = ({ products, openModal }) => (
   <div className={styles.products}>
-    {products.map((product) => (
-      <Box>
+    {products.map((product, index) => (
+      <Box key={index}>
         <div className={styles.products__product}>
           <span className={styles.products__name}>Product Name</span>
           <span className={styles.products__price}>123.43</span>

@@ -1,12 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Link} from "react-router-dom";
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
-const CustomLink = ({className, target, children}) => (
-  <Link to={target} className={className}>
+const CustomLink = ({ className, target, children, sharedState }) => (
+  <Link
+    to={{
+      pathname: target,
+      state: sharedState,
+    }}
+    className={className}>
     {children}
   </Link>
-);
+)
 
 CustomLink.propTypes = {
   className: PropTypes.string.isRequired,
@@ -14,4 +19,4 @@ CustomLink.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default CustomLink;
+export default CustomLink

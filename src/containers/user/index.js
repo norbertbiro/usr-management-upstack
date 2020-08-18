@@ -1,4 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { addProduct } from '../../modules/users'
+
 import {
   Container,
   Button,
@@ -14,22 +19,48 @@ import ProductList from '../../components/ProductList'
 import ProductForm from '../../components/ProductForm'
 import { ArrowLeft } from '../../assets/icons'
 
-const User = () => {
+const User = (props) => {
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
   const [show, setShow] = useState(false)
+  let history = useHistory()
+
   const closeHandler = () => setShow(false)
 
-  return (
+  const getUser = () => {
+    const clonedUsers = [...props.users]
+    setUser(
+      clonedUsers.filter(
+        (user) => Number(user.id) === Number(props.match.params.id)
+      )[0]
+    )
+  }
+
+  useEffect(() => {
+    getUser()
+  }, [])
+
+  useEffect(() => {
+    setLoading(false)
+  }, [user])
+
+  return loading ? (
+    'Please wait a moment'
+  ) : (
     <section className={styles.user}>
+      {console.log(user)}
       <Container>
         <Columns>
           <Columns.Column>
-            <PageHeader searchbar={false} subtitle="First Name Last Name">
+            <PageHeader
+              searchbar={false}
+              subtitle={`${user.first_name} ${user.last_name}`}>
               <Level.Side align="left">
                 <Level.Item>
                   <Button
                     renderAs={Anchor}
                     href={'#'}
-                    onClick={() => alert('go-back')}
+                    onClick={() => history.goBack()}
                     color="light">
                     <ArrowLeft /> Go Back
                   </Button>
@@ -82,10 +113,22 @@ const User = () => {
       </Container>
 
       <Modal show={show} onClose={closeHandler}>
-        <ProductForm />
+        <ProductForm addProduct={props.addProduct} />
       </Modal>
     </section>
   )
 }
 
-export default User
+const mapStateToProps = ({ users }) => ({
+  users: users.users,
+})
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      addProduct,
+    },
+    dispatch
+  )
+
+export default connect(mapStateToProps, mapDispatchToProps)(User)

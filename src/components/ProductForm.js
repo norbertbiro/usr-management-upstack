@@ -6,11 +6,13 @@ import styles from '../styles/productlist.module.scss'
 const { Field, Control, Label, Input } = Form
 
 class ProductForm extends PureComponent {
+  constructor(props) {
+    super(props)
+  }
   state = {
     name: '',
     cost: '',
   }
-
   onChange = (evt) => {
     const value = evt.target.value
     this.setState({
@@ -49,7 +51,9 @@ class ProductForm extends PureComponent {
           </Field>
           <Field>
             <Control>
-              <Button renderAs={'button'} type={'submit'}>
+              <Button
+                renderAs={'button'}
+                onClick={() => this.props.addProduct('hello')}>
                 SAVE
               </Button>
             </Control>
