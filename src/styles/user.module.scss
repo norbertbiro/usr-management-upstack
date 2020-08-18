@@ -1,3 +1,18 @@
 .user {
   margin-top: 2rem;
 }
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &__body_section {
+    display: flex;
+    &__align_center {
+      align-items: center;
+    }
+    &__is_column {
+      flex-direction: column;
+    }
+  }
+}

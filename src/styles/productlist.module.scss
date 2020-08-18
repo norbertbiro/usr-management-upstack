@@ -1,0 +1,17 @@
+.products {
+  display: flex;
+  flex-direction: column;
+  &__product {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &:not(:last-child) {
+      margin-bottom: .875rem;
+    }
+  }
+  &__button {
+    &:not(:last-child) {
+      margin-right: .5rem;
+    }
+  }
+}

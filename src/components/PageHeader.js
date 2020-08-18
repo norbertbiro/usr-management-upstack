@@ -3,9 +3,13 @@ import PropTypes from 'prop-types'
 import { Box, Heading, Level } from 'react-bulma-components'
 import SearchBar from './SearchBar'
 
-const PageHeader = ({ subtitle, children, searchbar }) => (
+import helperStyles from '../styles/helpers.module.scss'
+
+const PageHeader = ({ subtitle, children, searchbar, inverted }) => (
   <Box>
-    <Level renderAs="nav">
+    <Level
+      renderAs="nav"
+      className={inverted && `${helperStyles.is_inverted_flex}`}>
       {children}
       {subtitle ? (
         <Level.Side align="left">
@@ -33,6 +37,7 @@ PageHeader.propTypes = {
   subtitle: PropTypes.string.isRequired,
   children: PropTypes.node,
   searchbar: PropTypes.bool.isRequired,
+  inverted: PropTypes.bool,
 }
 
 PageHeader.defaultProps = {
