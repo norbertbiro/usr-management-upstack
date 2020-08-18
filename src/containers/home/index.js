@@ -5,33 +5,27 @@ import {
   increment,
   incrementAsync,
   decrement,
-  decrementAsync
+  decrementAsync,
 } from '../../modules/counter'
 
-import { Container, Columns } from "react-bulma-components";
-import SearchBar from "../../components/SearchBar";
-import UserList from "../../components/UserList";
-import PageTitle from "../../components/PageTitle";
+import PageHeader from '../../components/PageHeader'
+import { Container, Columns } from 'react-bulma-components'
+import UserList from '../../components/UserList'
 
-import styles from "../../styles/home.module.scss";
+import styles from '../../styles/home.module.scss'
 
-const Home = props => (
+const Home = (props) => (
   <section className={styles.home}>
     <Container>
       <Columns>
         <Columns.Column>
-          <PageTitle tag={'h2'} className={'title'}>
-            Home - User List
-          </PageTitle>
-        </Columns.Column>
-        <Columns.Column size={'two-fifths'} className={'is-pulled-right'}>
-          <SearchBar />
+          <PageHeader subtitle={'Home'} />
         </Columns.Column>
       </Columns>
 
       <Columns>
         <Columns.Column>
-            <UserList />
+          <UserList />
         </Columns.Column>
       </Columns>
 
@@ -57,21 +51,18 @@ const Home = props => (
 const mapStateToProps = ({ counter }) => ({
   count: counter.count,
   isIncrementing: counter.isIncrementing,
-  isDecrementing: counter.isDecrementing
+  isDecrementing: counter.isDecrementing,
 })
 
-const mapDispatchToProps = dispatch =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
       increment,
       incrementAsync,
       decrement,
-      decrementAsync
+      decrementAsync,
     },
     dispatch
   )
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

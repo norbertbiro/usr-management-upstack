@@ -1,27 +1,31 @@
 import React from 'react'
-
-import styles from "../../styles/user.module.scss";
-import {Container} from "react-bulma-components";
-import {Button, Columns} from "react-bulma-components";
-import PageTitle from "../../components/PageTitle";
+import { Container, Button, Columns, Level } from 'react-bulma-components'
+import PageTitle from '../../components/PageTitle'
+import styles from '../../styles/user.module.scss'
+import PageHeader from '../../components/PageHeader'
+import Anchor from '../../components/Anchor'
+import { ArrowLeft } from '../../assets/icons'
 
 const User = () => (
   <section className={styles.user}>
     <Container>
       <Columns>
-        <Columns.Column size={2}>
-          <Button text={true}>
-            {'<- Go Back'}
-          </Button>
-        </Columns.Column>
         <Columns.Column>
-          <PageTitle className={'title is-size-3'}>
-            First Name - Last Name
-          </PageTitle>
+          <PageHeader searchbar={false} subtitle="First Name Last Name">
+            <Level.Side align="left">
+              <Level.Item>
+                <Button
+                  renderAs={Anchor}
+                  href={'#'}
+                  onClick={() => alert('go-back')}>
+                  <ArrowLeft /> Go Back
+                </Button>
+              </Level.Item>
+            </Level.Side>
+          </PageHeader>
         </Columns.Column>
       </Columns>
-      <h1>Users page</h1>
-      <p>Hello User</p>
+
     </Container>
   </section>
 )
