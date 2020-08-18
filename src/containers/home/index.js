@@ -1,12 +1,6 @@
 import React, { useState } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import {
-  increment,
-  incrementAsync,
-  decrement,
-  decrementAsync,
-} from '../../modules/counter'
 
 import PageHeader from '../../components/PageHeader'
 import { Container, Columns } from 'react-bulma-components'
@@ -44,15 +38,6 @@ const mapStateToProps = ({ users }) => ({
   users: users.users,
 })
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    {
-      increment,
-      incrementAsync,
-      decrement,
-      decrementAsync,
-    },
-    dispatch
-  )
+const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
