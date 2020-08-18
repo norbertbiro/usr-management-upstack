@@ -1,5 +1,4 @@
 import React from 'react'
-import { push } from 'connected-react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
@@ -9,31 +8,50 @@ import {
   decrementAsync
 } from '../../modules/counter'
 
+import { Container, Columns } from "react-bulma-components";
+import SearchBar from "../../components/SearchBar";
+import UserList from "../../components/UserList";
+import PageTitle from "../../components/PageTitle";
+
+import styles from "../../styles/home.module.scss";
+
 const Home = props => (
-  <div>
-    <h1>Home</h1>
-    <p>Count: {props.count}</p>
+  <section className={styles.home}>
+    <Container>
+      <Columns>
+        <Columns.Column>
+          <PageTitle tag={'h2'} className={'title'}>
+            Home - User List
+          </PageTitle>
+        </Columns.Column>
+        <Columns.Column size={'two-fifths'} className={'is-pulled-right'}>
+          <SearchBar />
+        </Columns.Column>
+      </Columns>
 
-    <p>
-      <button onClick={props.increment}>Increment</button>
-      <button onClick={props.incrementAsync} disabled={props.isIncrementing}>
-        Increment Async
-      </button>
-    </p>
+      <Columns>
+        <Columns.Column>
+            <UserList />
+        </Columns.Column>
+      </Columns>
 
-    <p>
-      <button onClick={props.decrement}>Decrement</button>
-      <button onClick={props.decrementAsync} disabled={props.isDecrementing}>
-        Decrement Async
-      </button>
-    </p>
+      <p>Count: {props.count}</p>
 
-    <p>
-      <button onClick={() => props.changePage()}>
-        Go to about page via redux
-      </button>
-    </p>
-  </div>
+      <p>
+        <button onClick={props.increment}>Increment</button>
+        <button onClick={props.incrementAsync} disabled={props.isIncrementing}>
+          Increment Async
+        </button>
+      </p>
+
+      <p>
+        <button onClick={props.decrement}>Decrement</button>
+        <button onClick={props.decrementAsync} disabled={props.isDecrementing}>
+          Decrement Async
+        </button>
+      </p>
+    </Container>
+  </section>
 )
 
 const mapStateToProps = ({ counter }) => ({
@@ -48,8 +66,7 @@ const mapDispatchToProps = dispatch =>
       increment,
       incrementAsync,
       decrement,
-      decrementAsync,
-      changePage: () => push('/about-us')
+      decrementAsync
     },
     dispatch
   )

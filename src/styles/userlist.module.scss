@@ -1,0 +1,17 @@
+.users {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2rem;
+}
+
+.user {
+  &__email {
+    margin-top: .5rem;
+  }
+  &__cc {
+    margin-top: 1rem;
+  }
+  &__btn_wrapper {
+    margin-top: 1rem;
+  }
+}
